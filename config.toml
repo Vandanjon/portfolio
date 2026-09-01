@@ -1,0 +1,14 @@
+base_url = "https://vandanjon.fr"
+
+title = "Vandanjon - le dév facile pour vous"
+
+description = "Développeur fullstack : sites web et applications mobiles. Du besoin au produit livré."
+
+default_language = "fr"
+compile_sass = true
+minify_html = false
+build_search_index = false
+generate_feeds = false
+
+[markdown]
+smart_punctuation = true

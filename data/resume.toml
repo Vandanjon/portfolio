@@ -1,0 +1,14 @@
+[profile]
+role = "Formateur. Et d'autres trucs."
+pitch = "Une envie de progresser ? Je vous accompagne. Une idée à réaliser ? Je vous accompagne."
+location = "France · À distance"
+author = "Vandanjon"
+email = "contact@vandanjon.fr"
+
+[[socials]]
+name = "GitHub"
+url = "https://github.com/Vandanjon"
+
+[[socials]]
+name = "LinkedIn"
+url = "https://www.linkedin.com/in/benoitvandanjon"

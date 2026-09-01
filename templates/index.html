@@ -1,0 +1,34 @@
+{% set resume = load_data(path="data/resume.toml") %}
+
+<!doctype html>
+<html lang="{{ lang | default(value=`fr`) }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ config.title }}</title>
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="{{ get_url(path='/') }}"
+          >{{ resume.profile.author }}<span class="brand-dot">.</span></a
+        >
+
+        <nav class="nav" aria-label="Navigation principale">
+          <a href="{{ get_url(path='/') }}#parcours">Parcours</a>
+          <a href="{{ get_url(path='/') }}#projets">Projets</a>
+          <a href="{{ get_url(path='/') }}#offre">Offre</a>
+          <a class="nav-cta" href="#contact">Me contacter</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="resume"></section>
+      <section class="offers"></section>
+      <section class="projects"></section>
+    </main>
+  </body>
+</html>

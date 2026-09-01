@@ -1,0 +1,23 @@
+[[career]]
+work = "Animateur de colonies de vacances"
+year = 2000
+baseline = "Des rêves d'évasion devenus réalité."
+public = "08-12 ans"
+
+[[career]]
+work = "Professeur des écoles"
+year = 2014
+baseline = "Des explications claires et utiles pour les citoyens de demain."
+public = "03-11 ans"
+
+[[career]]
+work = "Formateur en développement web"
+year = 2024
+baseline = "Former de futurs pros du besoin d'un client au site en production."
+public = "18-55 ans"
+
+[[career]]
+work = "Freelance"
+year = 2026
+baseline = "Du code au service de vos projets. Plus l'accompagnement à la prise en main bien sûr."
+public = "01-99+ ans"
