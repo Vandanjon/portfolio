@@ -7,8 +7,26 @@ email = "contact@vandanjon.fr"
 
 [[socials]]
 name = "GitHub"
+icon = "github"
 url = "https://github.com/Vandanjon"
 
 [[socials]]
 name = "LinkedIn"
+icon = "linkedin"
 url = "https://www.linkedin.com/in/benoitvandanjon"
+
+[[languages]]
+name = "Français"
+level = "natif"
+
+[[languages]]
+name = "Créole RE"
+level = "natif"
+
+[[languages]]
+name = "Anglais"
+level = "professionnel"
+
+[[languages]]
+name = "Allemand"
+level = "courant"

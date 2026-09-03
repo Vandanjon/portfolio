@@ -7,18 +7,19 @@
   --dark-black: #14140f;
   --light-black: #55534c;
 
-  --pure-orange: #c8451f;
-  --light-orange: #e0663f;
+  --pure-teal: #0c8f74;
+  --light-teal: #35e2b0;
 
   --page-bg: var(--light-white);
   --text: var(--pure-black);
   --text-soft: var(--light-black);
   --border: var(--dark-white);
-  --accent: var(--pure-orange);
+  --accent: var(--pure-teal);
   --accent-ink: var(--pure-white);
 
   --wrap: 68rem;
   --gap: clamp(1rem, 3vw, 2rem);
+  --header-h: 4rem;
 
   --font-body:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -32,10 +33,11 @@
     --text: var(--light-white);
     --text-soft: var(--light-black);
     --border: var(--light-black);
-    --accent: var(--light-orange);
+    --accent: var(--light-teal);
     --accent-ink: var(--dark-black);
   }
 }
 
 @import "base";
 @import "nav";
+@import "hero";
