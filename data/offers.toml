@@ -1,9 +1,17 @@
 [[offer]]
-title = "Formule DUO"
-tagline = "Vous voulez progresser ? Je suis là pour vous aider"
-description = "Que vous ayez besoin de monter en compétences pour rester compétitif ou simplement que vous souhaitiez découvrir une nouvelle pratique, on peut s'y mettre pour trouver votre solution. Soutien moral, découverte des règles de l'art, rien n'est impossible. On se fixe un but, des étapes claires et ensemble, on repousse vos limites."
+theme = "Formation"
+title = "Apprendre"
+tagline = "Besoin de monter en compétences de manière ciblée et directe ?"
+description = "Que vous ayez besoin de monter en compétences pour rester compétitif ou simplement que vous souhaitiez découvrir une nouvelle pratique, voici la formule qu'il vous faut. Soutien moral, découverte des règles de l'art, rien n'est impossible. On se fixe un but, des étapes claires et ensemble, on repousse vos limites."
 
 [[offer]]
-title = "Formule SOLO"
-tagline = "vous avez un projet mais pas de temps à y consacrer ? JE bosse, VOUS profitez"
-description = "Patron débordé ou freelance dans le jus, je peux vous décharger de votre surcharge de travail pour que vous vous consacriez à l'essentiel. Analyse de vos besoins, recherche de solutions rapides à mettre en place et efficaces dans la durée, rien n'est impossible."
+theme = "Menuiserie"
+title = "Construire"
+tagline = "Vous avez un projet mais pas de temps à y consacrer ? JE bosse, VOUS profitez"
+description = "Patron débordé ou en mal de recrutement, je suis prêt à mettre mes bras au service de votre entreprise."
+
+[[offer]]
+theme = "Développement"
+title = "Numérique"
+tagline = "Vous avez besoin d'un site en ligne plus vite que l'éclair ? Ça tombe bien, j'aime bien coder ça."
+description = "Booster vos ventes grâce à un site accueillant. Faire découvrir votre travail en ligne. Donner vie à un projet numérique personnel. Je peux vous aider à rendre concret vos besoins numériques pour que vous en profitiez dès maintenant."
