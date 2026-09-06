@@ -1,23 +1,41 @@
 [[career]]
+themes = ["formation"]
 work = "Animateur de colonies de vacances"
 year = 2000
 baseline = "Des rêves d'évasion devenus réalité."
-public = "08-12 ans"
+public = "09-12 ans"
 
 [[career]]
+themes = ["formation"]
 work = "Professeur des écoles"
 year = 2014
 baseline = "Des explications claires et utiles pour les citoyens de demain."
 public = "03-11 ans"
 
 [[career]]
+themes = ["menuiserie"]
+work = "Menuisier"
+year = 2017
+baseline = "Conception et réalisation d'ouvrages divers ou intégration de maubles dans divers espaces."
+public = "01-99+ ans"
+
+[[career]]
+themes = ["développement"]
+work = "Freelance en équipe"
+year = 2020
+baseline = "Sous-traitance pour diverses associations ou autres freelances. Clients de la Réunion à la Belgique."
+public = "01-99+ ans"
+
+[[career]]
+themes = ["formation", "développement"]
 work = "Formateur en développement web"
 year = 2024
 baseline = "Former de futurs pros du besoin d'un client au site en production."
 public = "18-55 ans"
 
 [[career]]
-work = "Freelance"
+themes = ["développement"]
+work = "Freelance solo"
 year = 2026
 baseline = "Du code au service de vos projets. Plus l'accompagnement à la prise en main bien sûr."
 public = "01-99+ ans"
