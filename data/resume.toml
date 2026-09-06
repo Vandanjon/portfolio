@@ -1,5 +1,5 @@
 [profile]
-role = "Formateur. Et d'autres trucs."
+role = ["Formateur", "Développeur", "Menuisier"]
 pitch = "Une envie de progresser ? Je vous accompagne. Une idée à réaliser ? Je vous accompagne."
 location = "France · À distance"
 author = "Vandanjon"
