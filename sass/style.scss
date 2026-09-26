@@ -1,43 +1,75 @@
 :root {
-  --pure-white: #fafafa;
-  --light-white: #fbfbf9;
-  --dark-white: #e3e1d9;
-
-  --pure-black: #1a1a17;
-  --dark-black: #14140f;
-  --light-black: #55534c;
-
-  --pure-teal: #0c8f74;
-  --light-teal: #35e2b0;
-
-  --page-bg: var(--light-white);
-  --text: var(--pure-black);
-  --text-soft: var(--light-black);
-  --border: var(--dark-white);
-  --accent: var(--pure-teal);
-  --accent-ink: var(--pure-white);
-
-  --wrap: 68rem;
-  --gap: clamp(1rem, 3vw, 2rem);
-  --header-h: 4rem;
-
-  --font-body:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
-  --font-display: ui-serif, Georgia, "Times New Roman", serif;
+  --bg: #fff;
+  --fg: #000;
+  --line: color-mix(in srgb, var(--fg) 15%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --page-bg: var(--dark-black);
-    --text: var(--light-white);
-    --text-soft: var(--light-black);
-    --border: var(--light-black);
-    --accent: var(--light-teal);
-    --accent-ink: var(--dark-black);
+    --bg: #000;
+    --fg: #fff;
   }
 }
 
-@import "base";
-@import "nav";
-@import "hero";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// 10 % / reste / 10 % ; une barre ne grandit que si son contenu déborde (zoom fort)
+body {
+  display: grid;
+  grid-template-rows: minmax(10dvh, auto) 1fr minmax(10dvh, auto);
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, sans-serif;
+}
+
+.site-header,
+.site-footer {
+  display: grid;
+  place-items: center;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+}
+
+.placeholder {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.site-main {
+  display: grid;
+  place-items: center;
+  padding-inline: 1rem;
+  text-align: center;
+}
+
+.cta {
+  padding: 0.4em 1.2em;
+  border: 0;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--bg);
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+@import "intro";
