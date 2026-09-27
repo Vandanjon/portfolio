@@ -1,40 +1,73 @@
-// Intro 100 % CSS : fondu du logo, puis le voile s'efface sur la page déjà rendue.
-// Durée totale < 5 s : pas de bouton « Passer » exigé (WCAG 2.2.2).
-$fade-in: 2s;
-$hold: 0.5s;
-$fade-out: 0.8s;
+// Intro 100 % CSS : le logo arrive en zoom, reste, puis s'évanouit en flou ; la page apparaît ensuite.
+// Mouvement réduit : ni intro ni fondu, la page s'affiche directement.
+$zoom-in: 3s;
+$hold: 2s;
+$blur-out: 1s;
+$page-in: 2s;
+$page-at: $zoom-in + $hold + $blur-out;
 
 .intro {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: var(--bg);
-  color: var(--fg);
-  animation: intro-out $fade-out ease-in ($fade-in + $hold) forwards;
+  display: none;
 }
 
-.intro-logo {
-  width: min(80vw, 32rem);
-  opacity: 0;
-  animation: logo-in $fade-in ease-in-out forwards;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 1; // au-dessus de la page, même quand elle est transparente
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    color: var(--fg);
+    animation: intro-end $page-at forwards;
+  }
 
-@keyframes logo-in {
-  to {
-    opacity: 1;
+  .intro-logo {
+    width: 50vw;
+    animation:
+      logo-in $zoom-in ease-out,
+      logo-out $blur-out ease-in ($zoom-in + $hold) forwards;
+  }
+
+  .site-header,
+  .site-main,
+  .site-footer {
+    animation: page-in $page-in ease-out $page-at backwards;
   }
 }
 
-@keyframes intro-out {
+// État posé par js/intro.js : « off » = intro déjà vue dans la session, ou sautée
+:root[data-intro="off"] .intro {
+  display: none;
+}
+
+:root[data-intro="off"] :is(.site-header, .site-main, .site-footer) {
+  animation: none;
+}
+
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+@keyframes logo-out {
   to {
     opacity: 0;
+    scale: 1.6;
+    filter: blur(24px);
+  }
+}
+
+@keyframes intro-end {
+  to {
     visibility: hidden;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .intro {
-    display: none;
+@keyframes page-in {
+  from {
+    opacity: 0;
   }
 }

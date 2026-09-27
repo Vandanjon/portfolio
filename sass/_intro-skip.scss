@@ -1,0 +1,47 @@
+// Bouton façon cinématique de jeu ; masqué sans JS, puisqu'il ne ferait rien
+.intro-skip {
+  display: none;
+}
+
+:root[data-intro="play"] .intro-skip {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.4em 0.6em;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  cursor: pointer;
+  animation: skip-in 1s ease-out 0.5s backwards;
+}
+
+.intro-skip:is(:hover, :focus-visible) {
+  opacity: 1;
+}
+
+.intro-skip:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.intro-skip kbd {
+  padding: 0.15em 0.5em;
+  border: 1px solid currentColor;
+  border-bottom-width: 3px;
+  border-radius: 0.35em;
+  font: inherit;
+}
+
+@keyframes skip-in {
+  from {
+    opacity: 0;
+  }
+}

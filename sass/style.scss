@@ -1,13 +1,14 @@
+// Presque noir (reflet ardoise) et blanc cassé : contraste ≈ 15:1, moins dur que le noir/blanc purs
 :root {
-  --bg: #fff;
-  --fg: #000;
+  --bg: #f5f3ee;
+  --fg: #151718;
   --line: color-mix(in srgb, var(--fg) 15%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #000;
-    --fg: #fff;
+    --bg: #151718;
+    --fg: #ece9e2;
   }
 }
 
@@ -73,3 +74,4 @@ body {
 }
 
 @import "intro";
+@import "intro-skip";
