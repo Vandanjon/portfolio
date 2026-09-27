@@ -1,9 +1,8 @@
-// Intro 100 % CSS : le logo arrive en zoom, reste, puis s'évanouit en flou ; la page apparaît ensuite.
-// Mouvement réduit : ni intro ni fondu, la page s'affiche directement.
-$zoom-in: 3s;
+$zoom-in: 2s;
 $hold: 2s;
 $blur-out: 1s;
 $page-in: 2s;
+$blur: 24px;
 $page-at: $zoom-in + $hold + $blur-out;
 
 .intro {
@@ -49,6 +48,7 @@ $page-at: $zoom-in + $hold + $blur-out;
   from {
     opacity: 0;
     scale: 0;
+    filter: blur($blur);
   }
 }
 
@@ -56,7 +56,7 @@ $page-at: $zoom-in + $hold + $blur-out;
   to {
     opacity: 0;
     scale: 1.6;
-    filter: blur(24px);
+    filter: blur($blur);
   }
 }
 
