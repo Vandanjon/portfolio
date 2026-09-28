@@ -1,0 +1,47 @@
+// Rectangle flanqué de deux points posés sur ses bords latéraux
+.cta {
+  position: relative;
+  min-height: 44px;
+  // Le letter-spacing ajoute une espace après la dernière lettre : on la retire à droite
+  padding: 0 calc(24px - 0.18em) 0 24px;
+  border: 1px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cta::before,
+.cta::after {
+  @include dot;
+  content: "";
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.cta::before {
+  left: -5px;
+}
+
+.cta::after {
+  right: -5px;
+}
+
+.cta:is(:hover, :focus-visible) {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.cta:is(:hover, :focus-visible)::before,
+.cta:is(:hover, :focus-visible)::after {
+  background: var(--fg);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 5px;
+}

@@ -1,0 +1,17 @@
+// Bouton radio dessiné en point rond, plein quand il est choisi
+.dot {
+  @include dot;
+  flex: none;
+  margin: 0;
+  appearance: none;
+  cursor: pointer;
+}
+
+.dot:checked {
+  background: var(--fg);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}

@@ -1,0 +1,24 @@
+// Presque noir (reflet ardoise) et blanc cassé : contraste ≈ 15:1, moins dur que le noir/blanc purs
+@mixin dark {
+  --bg: #151718;
+  --fg: #ece9e2;
+  color-scheme: dark;
+}
+
+:root {
+  --bg: #f5f3ee;
+  --fg: #151718;
+  --line: color-mix(in srgb, var(--fg) 15%, transparent);
+  color-scheme: light;
+}
+
+// Sans JS, on suit l'OS ; avec, js/prefs.js pose data-theme (choix mémorisé, sinon l'OS)
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark;
+}

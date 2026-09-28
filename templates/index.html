@@ -6,6 +6,7 @@
     <meta name="color-scheme" content="light dark" />
     <title>{{ config.title }}</title>
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+    <script src="{{ get_url(path='js/prefs.js') }}"></script>
     <script src="{{ get_url(path='js/intro.js') }}"></script>
   </head>
 
@@ -21,7 +22,21 @@
     </div>
 
     <header class="site-header">
+      <fieldset class="wheel wheel--theme">
+        <legend class="visually-hidden">Thème</legend>
+        <span class="wheel__letter" aria-hidden="true"></span>
+        <label class="wheel__spot" title="Clair"><input class="dot" type="radio" name="theme" value="light" aria-label="Clair" /></label>
+        <label class="wheel__spot" title="Sombre"><input class="dot" type="radio" name="theme" value="dark" aria-label="Sombre" /></label>
+      </fieldset>
       <p class="placeholder">nav</p>
+      <fieldset class="wheel wheel--season">
+        <legend class="visually-hidden">Saison</legend>
+        <span class="wheel__letter" aria-hidden="true"></span>
+        <label class="wheel__spot" title="Printemps"><input class="dot" type="radio" name="season" value="printemps" aria-label="Printemps" /></label>
+        <label class="wheel__spot" title="Été"><input class="dot" type="radio" name="season" value="ete" aria-label="Été" /></label>
+        <label class="wheel__spot" title="Automne"><input class="dot" type="radio" name="season" value="automne" aria-label="Automne" /></label>
+        <label class="wheel__spot" title="Hiver"><input class="dot" type="radio" name="season" value="hiver" aria-label="Hiver" /></label>
+      </fieldset>
     </header>
 
     <main class="site-main">

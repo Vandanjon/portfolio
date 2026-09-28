@@ -1,0 +1,63 @@
+// Par préférence (= name des radios) : valeur → lettre au centre, place (x, y) sur le cercle
+$wheels: (
+  theme: (
+    light: ("c", 0, -1),
+    dark: ("s", 0, 1),
+  ),
+  season: (
+    printemps: ("p", 0, -1),
+    ete: ("e", 1, 0),
+    automne: ("a", 0, 1),
+    hiver: ("h", -1, 0),
+  ),
+);
+
+// Cercle portant la lettre du choix actif ; les choix sont posés sur son trait,
+// comme les points du bouton contact sur ses bords
+.wheel {
+  --size: 44px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+}
+
+// Sans JS, les roues ne feraient rien : on les masque en gardant leur place
+:root:not([data-theme]) .wheel {
+  visibility: hidden;
+}
+
+.wheel__letter {
+  font-size: 18px;
+  line-height: 1;
+}
+
+// Zone cliquable de 24px centrée sur le point
+.wheel__spot {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  translate: -50% -50%;
+  cursor: pointer;
+}
+
+@each $pref, $choices in $wheels {
+  @each $value, $spec in $choices {
+    :root[data-#{$pref}="#{$value}"] .wheel--#{$pref} .wheel__letter::before {
+      content: nth($spec, 1);
+    }
+
+    // Les % partent de la padding box : le milieu du trait est à (--size / 2 - 0.5px) du centre
+    .wheel__spot:has(> [name="#{$pref}"][value="#{$value}"]) {
+      left: calc(50% + #{nth($spec, 2)} * (var(--size) / 2 - 0.5px));
+      top: calc(50% + #{nth($spec, 3)} * (var(--size) / 2 - 0.5px));
+    }
+  }
+}

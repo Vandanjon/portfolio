@@ -1,16 +1,6 @@
-// Presque noir (reflet ardoise) et blanc cassé : contraste ≈ 15:1, moins dur que le noir/blanc purs
-:root {
-  --bg: #f5f3ee;
-  --fg: #151718;
-  --line: color-mix(in srgb, var(--fg) 15%, transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #151718;
-    --fg: #ece9e2;
-  }
-}
+// Bases (jetons, reset, utilitaires), puis mise en page, puis composants
+@import "mixins";
+@import "tokens";
 
 *,
 *::before,
@@ -18,60 +8,25 @@
   box-sizing: border-box;
 }
 
-// 10 % / reste / 10 % ; une barre ne grandit que si son contenu déborde (zoom fort)
 body {
-  display: grid;
-  grid-template-rows: minmax(10dvh, auto) 1fr minmax(10dvh, auto);
-  min-height: 100dvh;
   margin: 0;
   background: var(--bg);
   color: var(--fg);
   font-family: system-ui, sans-serif;
 }
 
-.site-header,
-.site-footer {
-  display: grid;
-  place-items: center;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.site-header {
-  border-bottom: 1px solid var(--line);
-}
-
-.site-footer {
-  border-top: 1px solid var(--line);
-}
-
-.placeholder {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.site-main {
-  display: grid;
-  place-items: center;
-  padding-inline: 1rem;
-  text-align: center;
-}
-
-.cta {
-  padding: 0.4em 1.2em;
-  border: 0;
-  border-radius: 999px;
-  background: var(--fg);
-  color: var(--bg);
-  font: inherit;
-  line-height: 1.2;
-  cursor: pointer;
-}
-
-.cta:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
-}
-
-@import "intro";
-@import "intro-skip";
+@import "layout";
+@import "components/dot";
+@import "components/cta";
+@import "components/wheel";
+@import "components/intro";
+@import "components/intro-skip";
