@@ -13,7 +13,7 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   place-items: center;
-  gap: 1rem;
+  gap: clamp(12px, 2vw, 32px);
   // Au moins la moitié de la zone cliquable des points de roue (36px), qui dépasse du cercle
   padding-inline: 20px;
 }
@@ -40,10 +40,10 @@ body {
   justify-self: end;
 }
 
-// Contact au centre, pause des animations à droite ; le bouton contact ne touche
-// jamais le bord bas de l'écran
+// Contact au centre, pause des animations à droite. Les écarts suivent la hauteur de
+// l'écran, bornés : jamais collés au bord bas, jamais démesurés sur grand écran
 .site-footer {
-  padding-block: 12px;
+  padding-block: clamp(8px, 1.5dvh, 16px) clamp(16px, 4dvh, 48px);
 }
 
 .site-footer > .cta {
@@ -53,6 +53,6 @@ body {
 .site-main {
   display: grid;
   place-items: center;
-  padding-inline: 1rem;
+  padding-inline: clamp(16px, 4vw, 48px);
   text-align: center;
 }

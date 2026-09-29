@@ -1,13 +1,14 @@
 // Rectangle flanqué de deux points posés sur ses bords latéraux
 .cta {
   position: relative;
+  // Cible tactile en px ; texte et marges en em : ils suivent la taille de texte du navigateur
   min-height: 66px;
   // Le letter-spacing ajoute une espace après la dernière lettre : on la retire à droite
-  padding: 0 calc(36px - 0.18em) 0 36px;
+  padding: 0 calc(2em - 0.18em) 0 2em;
   border: 1px solid var(--fg);
   background: var(--bg);
   color: var(--fg);
-  font: 600 18px/1 system-ui, sans-serif;
+  font: 600 1.125rem/1 system-ui, sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
