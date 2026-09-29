@@ -20,7 +20,9 @@ export function create(stage) {
       streaks: Array.from({ length: 5 }, () => ({ x: from - dir * rand(0, stage.w * 0.3), y: rand(stage.crown.top, stage.h), len: rand(80, 180) })),
       dir,
     };
-    stage.tree.animate([{ rotate: "0deg" }, { rotate: `${dir * 1.2}deg` }, { rotate: `${-dir * 0.3}deg` }, { rotate: "0deg" }], { duration: LENGTH * 1000, easing: "ease-in-out" });
+    // Les fruits, posés dans une boîte identique à celle de l'arbre, ploient avec lui
+    const sway = [{ rotate: "0deg" }, { rotate: `${dir * 1.2}deg` }, { rotate: `${-dir * 0.3}deg` }, { rotate: "0deg" }];
+    for (const box of [stage.tree, document.querySelector(".orchard")]) box?.animate(sway, { duration: LENGTH * 1000, easing: "ease-in-out" });
   }
 
   return {

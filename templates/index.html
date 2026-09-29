@@ -9,6 +9,7 @@
     <script src="{{ get_url(path='js/prefs.js') }}"></script>
     <script src="{{ get_url(path='js/intro.js') }}"></script>
     <script src="{{ get_url(path='js/scene.js') }}" defer></script>
+    <script src="{{ get_url(path='js/fruits.js') }}" defer></script>
     <script src="{{ get_url(path='js/life/main.js') }}" type="module"></script>
   </head>
 
@@ -50,6 +51,21 @@
 
     <main class="site-main">
       <h1 class="visually-hidden">{{ config.title }}</h1>
+      {%- set projects = load_data(path="data/projects.toml") %}
+      <ol class="orchard" aria-label="Parcours">
+        {%- for step in projects.career %}
+        <li>
+          <button class="fruit" type="button">
+            <span class="fruit__ring"></span>
+            <span class="fruit__body"></span>
+            <span class="fruit__label">
+              <span class="fruit__year">{{ step.year }}</span>
+              <span class="fruit__work">{{ step.work }}</span>
+            </span>
+          </button>
+        </li>
+        {%- endfor %}
+      </ol>
     </main>
 
     <footer class="site-footer">

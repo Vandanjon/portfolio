@@ -1,0 +1,57 @@
+// Étiquette : l'année reste affichée, l'intitulé se déplie au survol ou au focus
+// Pastille sur fond de page : contraste du texte garanti quel que soit le feuillage ;
+// reliée à l'anneau par un trait de sa couleur
+.fruit__label {
+  --pill: color-mix(in srgb, var(--bg) 85%, transparent);
+  --tail: 14px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + var(--side) * (var(--fruit-size) * 0.9 + var(--tail) + 2px));
+  translate: calc((var(--side) - 1) * 50%) -50%;
+  width: max-content;
+  max-width: min(16rem, 40vw);
+  padding: 0.15em 0.6em;
+  border-radius: 0.8em;
+  background: var(--pill);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+// Côté fruit de la pastille : à gauche si l'étiquette est à droite, et inversement
+.fruit__label::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  left: calc((1 - var(--side)) * 50% - (1 + var(--side)) * var(--tail) / 2);
+  width: var(--tail);
+  height: 2px;
+  background: linear-gradient(calc(var(--side) * -90deg), var(--pill), transparent);
+}
+
+.fruit__year {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.fruit__work {
+  display: block;
+}
+
+// Replié : reste dans le nom du bouton pour les lecteurs d'écran
+.fruit:not(:hover, :focus-visible) .fruit__work {
+  @extend .visually-hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fruit:is(:hover, :focus-visible) .fruit__work {
+    animation: fruit-unfold 0.4s ease-out;
+  }
+}
+
+@keyframes fruit-unfold {
+  from {
+    opacity: 0;
+    translate: calc(var(--side) * -6px) 0;
+  }
+}

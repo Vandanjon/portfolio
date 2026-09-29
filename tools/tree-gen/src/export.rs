@@ -39,9 +39,9 @@ pub fn avif(pix: &Pixmap, quality: f32, path: &Path) {
     std::fs::write(path, encoded.avif_file).expect("écriture de l'AVIF");
 }
 
-/// Dimensions de l'image de l'arbre, pied du tronc et cœur du houppier (d'où part le halo)
-/// en fractions de cette image
-pub fn scss(cam: &Camera, (width, height): (u32, u32), crown_center_y: f32, path: &Path) {
+/// Dimensions de l'image de l'arbre, pied du tronc, cœur du houppier (d'où part le halo) et
+/// emplacements des fruits, en fractions de cette image
+pub fn scss(cam: &Camera, (width, height): (u32, u32), crown_center_y: f32, fruits: &[(f32, f32)], path: &Path) {
     let (w, h) = (width as f32, height as f32);
     let exported = |v: f32| (v * TREE_SCALE).round();
     let mut out = String::from("// Généré par tools/tree-gen : ne pas modifier à la main\n");
@@ -55,5 +55,8 @@ pub fn scss(cam: &Camera, (width, height): (u32, u32), crown_center_y: f32, path
     for (name, value) in values {
         writeln!(out, "${name}: {};", (value * 10_000.0).round() / 10_000.0).expect("écriture en mémoire");
     }
+    // Virgule finale : une liste d'un seul fruit reste une liste de paires
+    let spots: String = fruits.iter().map(|(x, y)| format!("{x} {y}, ")).collect();
+    writeln!(out, "$fruit-spots: ({spots});").expect("écriture en mémoire");
     std::fs::write(path, out).expect("écriture du partiel Sass");
 }

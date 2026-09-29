@@ -38,13 +38,21 @@ fn perches(nodes: &[Node], shade: &Shade) -> Vec<V3> {
     kept
 }
 
-pub fn json(nodes: &[Node], leaves: &[Leaf], shade: &Shade, cam: &Camera, (width, height): (u32, u32), heart_y: f32, path: &Path) {
-    let frac = |p: V3| {
-        let (x, y) = cam.project(p);
-        ((x / width as f32 * 1e4).round() / 1e4, (y / height as f32 * 1e4).round() / 1e4)
-    };
-    let tips = leaves.iter().map(|l| frac(l.base + l.along));
-    let (l, t, r, b) = tips.fold((1.0f32, 1.0f32, 0.0f32, 0.0f32), |(l, t, r, b), (x, y)| (l.min(x), t.min(y), r.max(x), b.max(y)));
+/// Point de l'espace en fractions de l'image de l'arbre, au dix-millième
+pub fn frac(cam: &Camera, (width, height): (u32, u32), p: V3) -> (f32, f32) {
+    let (x, y) = cam.project(p);
+    ((x / width as f32 * 1e4).round() / 1e4, (y / height as f32 * 1e4).round() / 1e4)
+}
+
+/// Contour du houppier (gauche, haut, droite, bas) : boîte des pointes de feuilles
+pub fn crown_box(leaves: &[Leaf], cam: &Camera, size: (u32, u32)) -> (f32, f32, f32, f32) {
+    let tips = leaves.iter().map(|l| frac(cam, size, l.base + l.along));
+    tips.fold((1.0, 1.0, 0.0, 0.0), |(l, t, r, b), (x, y)| (l.min(x), t.min(y), r.max(x), b.max(y)))
+}
+
+pub fn json(nodes: &[Node], leaves: &[Leaf], shade: &Shade, cam: &Camera, size: (u32, u32), heart_y: f32, path: &Path) {
+    let frac = |p: V3| frac(cam, size, p);
+    let (l, t, r, b) = crown_box(leaves, cam, size);
     let list = perches(nodes, shade).into_iter().map(frac).map(|(x, y)| format!("[{x},{y}]")).collect::<Vec<_>>().join(",");
     let (hx, hy) = frac(v3(0.0, heart_y, 0.0));
     let (fx, fy) = frac(V3::default());

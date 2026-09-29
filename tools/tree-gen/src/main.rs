@@ -6,6 +6,7 @@ mod crown;
 mod export;
 mod field;
 mod foliage;
+mod fruits;
 mod growth;
 mod landmarks;
 mod light;
@@ -21,6 +22,7 @@ mod voxels;
 use std::path::PathBuf;
 use std::time::Instant;
 
+use crate::math::v3;
 use crate::render::Camera;
 use crate::species::CHARME;
 
@@ -47,7 +49,8 @@ fn main() {
     let shade = light::Shade::new(&leaves, SHADE_CELL);
     let cam = Camera::frame(&nodes, &leaves, TREE_SIZE, 100.0, 110.0);
     let lighting = render::Lighting::new(&nodes, &leaves, &shade);
-    export::scss(&cam, TREE_SIZE, crown.center().y, &site.join("sass/_scene-data.scss"));
+    let fruits = fruits::spots(&leaves, &shade, &cam, TREE_SIZE, v3(0.0, crown.center().y, 0.0), fruits::count(&site));
+    export::scss(&cam, TREE_SIZE, crown.center().y, &fruits, &site.join("sass/_scene-data.scss"));
     landmarks::json(&nodes, &leaves, &shade, &cam, TREE_SIZE, crown.center().y, &site.join("data/scene.json"));
     eprintln!("{} nœuds, {} feuilles, éclairage ({:.1?})", nodes.len(), leaves.len(), clock.elapsed());
 

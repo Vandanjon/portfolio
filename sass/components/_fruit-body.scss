@@ -1,0 +1,55 @@
+// Petite sphère peinte, queue et feuille ; réactions au survol et au focus
+// Sphère : reflet, chair en dégradé, ombre portée ; queue et feuille au-dessus
+.fruit__body {
+  background:
+    radial-gradient(ellipse 30% 20% at 36% 30%, rgb(255 255 255 / 0.85), transparent),
+    radial-gradient(circle at 38% 34%, var(--fruit-light) 0 4%, var(--fruit) 42%, var(--fruit-dark));
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  transform-origin: 50% -60%; // le fruit se balance au bout de sa queue
+}
+
+.fruit__body::before,
+.fruit__body::after {
+  content: "";
+  position: absolute;
+  bottom: 90%;
+  left: 48%;
+}
+
+.fruit__body::before {
+  width: 2px;
+  height: 28%;
+  background: #5b4030;
+  rotate: 10deg;
+}
+
+.fruit__body::after {
+  width: 55%;
+  height: 30%;
+  border-radius: 0 100%;
+  background: linear-gradient(135deg, #9ccc5a, #3f7a2a);
+  rotate: -20deg;
+  transform-origin: 0 100%;
+}
+
+.fruit:is(:hover, :focus-visible) {
+  z-index: 1;
+
+  &::before,
+  .fruit__ring {
+    opacity: 1;
+  }
+
+  .fruit__ring {
+    scale: 1.15;
+  }
+
+  .fruit__body {
+    scale: 1.12;
+  }
+}
+
+.fruit:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: -4px;
+}

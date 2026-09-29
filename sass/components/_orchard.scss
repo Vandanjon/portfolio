@@ -1,0 +1,45 @@
+// Verger : boîte calée sur l'image de l'arbre et emplacement de chaque fruit du parcours
+// (data/projects.toml), généré par tools/tree-gen. Le fruit : _fruit*.scss ; entrée en
+// scène et clic : js/fruits.js ; couleurs par ambiance : _scene-ambiences.scss
+.orchard {
+  @include tree-box;
+  --hit: 44px; // zone cliquable, bien plus grande que le fruit (cible tactile)
+  --fruit-size: clamp(14px, calc(var(--tree-h) * 0.02), 20px);
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none; // la boîte déborde sur le pied de page : seuls les fruits captent
+
+  > li {
+    position: absolute;
+  }
+}
+
+// Étiquette à droite du fruit (1) ou à gauche (-1)
+@mixin label-side($side) {
+  --side: #{$side};
+  text-align: if($side < 0, end, start);
+}
+
+// Étiquette vers l'extérieur de l'arbre, vers l'intérieur en portrait où l'arbre occupe
+// toute la largeur ; chaque fruit a sa propre phase de mouvement et son tour de
+// scintillement (un fruit toutes les $twinkle-gap)
+$twinkle-gap: 5s;
+$twinkle-cycle: length($fruit-spots) * $twinkle-gap;
+$i: 0;
+@each $x, $y in $fruit-spots {
+  $i: $i + 1;
+  $outward: if($x < $tree-foot-x, -1, 1);
+  .orchard > :nth-child(#{$i}) {
+    @include label-side($outward);
+    --phase: #{-0.83s * $i};
+    --turn: #{($i - 1) * $twinkle-gap};
+    left: $x * 100%;
+    top: $y * 100%;
+
+    @media (orientation: portrait) {
+      @include label-side(-$outward);
+    }
+  }
+}

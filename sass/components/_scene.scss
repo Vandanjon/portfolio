@@ -8,22 +8,33 @@
   initial-value: 0px;
 }
 
-.scene {
+// Boîte de l'image de l'arbre, placée pour que son pied tombe en (--tree-x, --foot-y) ;
+// les fruits (_fruit.scss) en posent une identique pour rester collés à l'image
+@mixin tree-box {
   // Paysage : arbre à gauche de l'axe pour laisser la place au contenu ; portrait : centré
   --tree-h: 90dvh;
   --tree-x: 36vw;
   --foot-y: 90dvh;
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: var(--bg);
+  left: calc(var(--tree-x) - var(--tree-h) * #{$tree-foot-x * $tree-width / $tree-height});
+  top: calc(var(--foot-y) - var(--tree-h) * #{$tree-foot-y});
+  height: var(--tree-h);
+  aspect-ratio: #{$tree-width} / #{$tree-height};
+  // L'arbre ploie depuis son pied (rafales de js/life/gusts.js)
+  transform-origin: #{$tree-foot-x * 100%} #{$tree-foot-y * 100%};
 
   @media (orientation: portrait) {
     --tree-h: 59dvh;
     --tree-x: 50vw;
     --foot-y: 84dvh;
   }
+}
+
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
 }
 
 .scene__decor {
@@ -33,17 +44,11 @@
   background: var(--decor) center bottom / cover no-repeat;
 }
 
-// Boîte de l'image de l'arbre, placée pour que son pied tombe en (--tree-x, --foot-y)
 .scene__tree {
+  @include tree-box;
   --heart-at: #{$tree-heart-y}; // hauteur du cœur du houppier, en fraction de la boîte
   position: absolute;
-  left: calc(var(--tree-x) - var(--tree-h) * #{$tree-foot-x * $tree-width / $tree-height});
-  top: calc(var(--foot-y) - var(--tree-h) * #{$tree-foot-y});
-  height: var(--tree-h);
-  aspect-ratio: #{$tree-width} / #{$tree-height};
   background: var(--tree) center / contain no-repeat;
-  // L'arbre ploie depuis son pied (rafales de js/life/gusts.js)
-  transform-origin: #{$tree-foot-x * 100%} #{$tree-foot-y * 100%};
 }
 
 // Ancienne scène pendant le halo : un disque s'y ouvre depuis le cœur de l'arbre,

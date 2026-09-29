@@ -1,0 +1,80 @@
+// Fruit : zone cliquable plus grande que lui, et ce qui le signale de loin (lueur, anneau)
+.fruit {
+  position: absolute;
+  inset: calc(var(--hit) / -2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Tous centrés sur la zone cliquable, taille rapportée au fruit
+.fruit::before,
+.fruit::after,
+.fruit__ring,
+.fruit__body {
+  position: absolute;
+  inset: 0;
+  width: var(--fruit-size);
+  height: var(--fruit-size);
+  margin: auto;
+  border-radius: 50%;
+  transition: opacity 0.4s ease, scale 0.5s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+// Lueur dessous
+.fruit::before {
+  content: "";
+  width: calc(var(--fruit-size) * 6);
+  height: calc(var(--fruit-size) * 6);
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--fruit-light) 90%, transparent),
+    color-mix(in srgb, var(--fruit-light) 40%, transparent) 45%,
+    transparent
+  );
+  opacity: 0.7;
+}
+
+// Onde au clic par-dessus (js/fruits.js)
+.fruit::after {
+  content: "";
+  border: 2px solid var(--fruit-light);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fruit__ring {
+  width: calc(var(--fruit-size) * 1.8);
+  height: calc(var(--fruit-size) * 1.8);
+  border: 1.2px solid var(--fruit-light);
+  opacity: 0.6;
+}
+
+// Quatre carrés sur le trait de l'anneau, tournés d'un huitième de tour : des losanges
+.fruit__ring::before {
+  content: "";
+  position: absolute;
+  inset: -2.6px;
+  $dot: linear-gradient(var(--fruit), var(--fruit)) no-repeat;
+  background: $dot 50% 0 / 4px 4px, $dot 100% 50% / 4px 4px, $dot 50% 100% / 4px 4px, $dot 0 50% / 4px 4px;
+  rotate: 45deg;
+}
+
+// Étoile à quatre branches qui scintille sur le fruit, invisible entre deux éclats
+.fruit__ring::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  background:
+    radial-gradient(closest-side, #fff, transparent 30%),
+    linear-gradient(transparent 48%, #fff 50%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, #fff 50%, transparent 52%);
+  mask: radial-gradient(closest-side, #000, transparent);
+  opacity: 0;
+}

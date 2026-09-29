@@ -1,0 +1,69 @@
+// Mouvement continu seulement si le bouton pause est là (js/life/main.js) : sans JS ou en
+// mouvement réduit, fruits immobiles ; en pause, figés sur place (WCAG 2.2.2)
+:root:has(.motion-toggle:not([hidden])) {
+  .fruit::before {
+    animation: fruit-breathe 3.2s var(--phase) ease-in-out infinite alternate;
+  }
+
+  .fruit__ring {
+    animation: fruit-turn 16s var(--phase) linear infinite;
+  }
+
+  .fruit__body {
+    animation: fruit-sway 4.6s var(--phase) ease-in-out infinite alternate;
+  }
+
+  .fruit__ring::after {
+    animation: fruit-twinkle $twinkle-cycle var(--turn) ease-out infinite;
+  }
+}
+
+:root:has(.motion-toggle[aria-pressed="true"]) {
+  .fruit::before,
+  .fruit__ring,
+  .fruit__ring::after,
+  .fruit__body {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes fruit-breathe {
+  from {
+    scale: 0.9;
+  }
+  to {
+    scale: 1.1;
+  }
+}
+
+@keyframes fruit-turn {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@keyframes fruit-sway {
+  from {
+    rotate: -4deg;
+  }
+  to {
+    rotate: 4deg;
+  }
+}
+
+// Éclat bref (0,4 s de montée, 1 s d'extinction), puis rien jusqu'au prochain tour
+@keyframes fruit-twinkle {
+  0% {
+    opacity: 0;
+    scale: 0.3;
+  }
+  #{percentage(0.4s / $twinkle-cycle)} {
+    opacity: 1;
+    scale: 1;
+  }
+  #{percentage(1.4s / $twinkle-cycle)},
+  100% {
+    opacity: 0;
+    scale: 0.3;
+  }
+}
