@@ -9,6 +9,7 @@
     <script src="{{ get_url(path='js/prefs.js') }}"></script>
     <script src="{{ get_url(path='js/intro.js') }}"></script>
     <script src="{{ get_url(path='js/scene.js') }}" defer></script>
+    <script src="{{ get_url(path='js/life/main.js') }}" type="module"></script>
   </head>
 
   <body>
@@ -26,6 +27,8 @@
       <div class="scene__decor"></div>
       <div class="scene__tree"></div>
     </div>
+    <canvas class="life" aria-hidden="true"></canvas>
+    <script type="application/json" id="scene-marks">{{ load_data(path="data/scene.json") | json_encode | safe }}</script>
 
     <header class="site-header">
       <fieldset class="wheel wheel--theme">
@@ -51,6 +54,9 @@
 
     <footer class="site-footer">
       <button class="cta" type="button">Contactez-moi</button>
+      <button class="motion-toggle" type="button" aria-pressed="false" hidden>
+        <span class="visually-hidden">Mettre les animations en pause</span>
+      </button>
     </footer>
   </body>
 </html>

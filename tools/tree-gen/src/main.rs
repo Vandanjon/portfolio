@@ -7,6 +7,7 @@ mod export;
 mod field;
 mod foliage;
 mod growth;
+mod landmarks;
 mod light;
 mod math;
 mod preview;
@@ -47,6 +48,7 @@ fn main() {
     let cam = Camera::frame(&nodes, &leaves, TREE_SIZE, 100.0, 110.0);
     let lighting = render::Lighting::new(&nodes, &leaves, &shade);
     export::scss(&cam, TREE_SIZE, crown.center().y, &site.join("sass/_scene-data.scss"));
+    landmarks::json(&nodes, &leaves, &shade, &cam, TREE_SIZE, crown.center().y, &site.join("data/scene.json"));
     eprintln!("{} nœuds, {} feuilles, éclairage ({:.1?})", nodes.len(), leaves.len(), clock.elapsed());
 
     for (theme, season, amb) in ambience::all() {

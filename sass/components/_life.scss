@@ -1,0 +1,19 @@
+// Habitants de la scène (js/life) : au-dessus du décor, sous le contenu, jamais cliquables ;
+// ils s'effacent pendant le halo et n'existent pas si l'utilisateur refuse les animations
+.life {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+
+  &.is-leaving {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}

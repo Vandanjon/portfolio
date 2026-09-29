@@ -1,0 +1,37 @@
+// Pause des animations (WCAG 2.2.2), dans la famille des roues : cercle au trait,
+// deux barres pour « pause », un triangle pour « lecture » une fois en pause
+.motion-toggle {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  padding: 0;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.motion-toggle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 22px;
+  border-inline: 6px solid currentColor;
+}
+
+.motion-toggle[aria-pressed="true"]::before {
+  width: 0;
+  height: 0;
+  margin-left: calc(50% - 6px);
+  border-block: 12px solid transparent;
+  border-inline: 20px solid currentColor;
+  border-right: 0;
+}
+
+.motion-toggle:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}

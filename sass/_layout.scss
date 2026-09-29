@@ -7,18 +7,21 @@ body {
   min-height: 100dvh;
 }
 
+// Trois colonnes : un réglage de chaque côté, l'essentiel au centre
 .site-header,
 .site-footer {
   display: grid;
+  grid-template-columns: 1fr auto 1fr;
   place-items: center;
+  gap: 1rem;
+  // Au moins la moitié de la zone cliquable des points de roue (36px), qui dépasse du cercle
+  padding-inline: 20px;
 }
 
-// Thème à gauche, saison à droite ; la colonne du centre attend le logo
+// Thème à gauche, logo au centre, saison à droite
 .site-header {
-  grid-template-columns: 1fr auto 1fr;
-  gap: 1rem;
   // Marge verticale = débord des points de la roue, pour les écrans bas (paysage mobile)
-  padding: 7px 1rem;
+  padding-block: 7px;
 }
 
 .site-header > :first-child {
@@ -31,14 +34,20 @@ body {
   aspect-ratio: 422 / 199;
 }
 
-.site-header > :last-child {
+.site-header > :last-child,
+.site-footer > .motion-toggle {
   grid-column: 3;
   justify-self: end;
 }
 
-// Le bouton contact ne touche jamais le bord bas de l'écran
+// Contact au centre, pause des animations à droite ; le bouton contact ne touche
+// jamais le bord bas de l'écran
 .site-footer {
   padding-block: 12px;
+}
+
+.site-footer > .cta {
+  grid-column: 2;
 }
 
 .site-main {

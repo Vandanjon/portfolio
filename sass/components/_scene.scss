@@ -42,6 +42,8 @@
   height: var(--tree-h);
   aspect-ratio: #{$tree-width} / #{$tree-height};
   background: var(--tree) center / contain no-repeat;
+  // L'arbre ploie depuis son pied (rafales de js/life/gusts.js)
+  transform-origin: #{$tree-foot-x * 100%} #{$tree-foot-y * 100%};
 }
 
 // Ancienne scène pendant le halo : un disque s'y ouvre depuis le cœur de l'arbre,
