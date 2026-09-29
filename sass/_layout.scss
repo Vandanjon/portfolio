@@ -13,28 +13,32 @@ body {
   place-items: center;
 }
 
-// Thème à gauche, nav au centre, saison à droite
+// Thème à gauche, saison à droite ; la colonne du centre attend le logo
 .site-header {
   grid-template-columns: 1fr auto 1fr;
   gap: 1rem;
   // Marge verticale = débord des points de la roue, pour les écrans bas (paysage mobile)
-  padding: 6px 1rem;
+  padding: 7px 1rem;
 }
 
 .site-header > :first-child {
   justify-self: start;
 }
 
+// Logo au centre, à l'échelle de la barre (10 % de la hauteur)
+.site-logo {
+  height: clamp(40px, 7dvh, 72px);
+  aspect-ratio: 422 / 199;
+}
+
 .site-header > :last-child {
+  grid-column: 3;
   justify-self: end;
 }
 
-// Emplacement de la future nav
-.placeholder {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
+// Le bouton contact ne touche jamais le bord bas de l'écran
+.site-footer {
+  padding-block: 12px;
 }
 
 .site-main {
@@ -42,14 +46,4 @@ body {
   place-items: center;
   padding-inline: 1rem;
   text-align: center;
-}
-
-.site-footer {
-  border-top: 1px solid var(--line);
-}
-
-// À cheval sur la bordure : moitié haute dans le main, moitié basse dans le footer
-.site-footer > .cta {
-  align-self: start;
-  translate: 0 -50%;
 }

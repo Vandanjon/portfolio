@@ -44,7 +44,9 @@ pub fn segment(pixmap: &mut Pixmap, a: &Node, b: &Node, lit: (Lit, Lit), amb: &A
     pb.line_to(x1 - px * r1, y1 - py * r1);
     pb.line_to(x0 - px * r0, y0 - py * r0);
     pb.close();
-    for path in [pb.finish(), PathBuilder::from_circle(x1, y1, r1)].into_iter().flatten() {
+    // La rotule arrondit les coudes ; au ras du sol, l'empattement la ferait dépasser sous le pied
+    let joint = if b.pos.y > b.radius { PathBuilder::from_circle(x1, y1, r1) } else { None };
+    for path in [pb.finish(), joint].into_iter().flatten() {
         pixmap.fill_path(&path, &paint, FillRule::Winding, Transform::identity(), None);
     }
 }

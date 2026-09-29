@@ -1,13 +1,13 @@
 // Rectangle flanqué de deux points posés sur ses bords latéraux
 .cta {
   position: relative;
-  min-height: 44px;
+  min-height: 66px;
   // Le letter-spacing ajoute une espace après la dernière lettre : on la retire à droite
-  padding: 0 calc(24px - 0.18em) 0 24px;
+  padding: 0 calc(36px - 0.18em) 0 36px;
   border: 1px solid var(--fg);
   background: var(--bg);
   color: var(--fg);
-  font: 600 12px/1 system-ui, sans-serif;
+  font: 600 18px/1 system-ui, sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
@@ -24,11 +24,11 @@
 }
 
 .cta::before {
-  left: -5px;
+  left: -7px;
 }
 
 .cta::after {
-  right: -5px;
+  right: -7px;
 }
 
 .cta:is(:hover, :focus-visible) {

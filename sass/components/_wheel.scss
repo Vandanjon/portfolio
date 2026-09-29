@@ -15,7 +15,7 @@ $wheels: (
 // Cercle portant la lettre du choix actif ; les choix sont posés sur son trait,
 // comme les points du bouton contact sur ses bords
 .wheel {
-  --size: 44px;
+  --size: 66px;
   position: relative;
   display: grid;
   place-items: center;
@@ -33,17 +33,17 @@ $wheels: (
 }
 
 .wheel__letter {
-  font-size: 18px;
+  font-size: 27px;
   line-height: 1;
 }
 
-// Zone cliquable de 24px centrée sur le point
+// Zone cliquable de 36px centrée sur le point
 .wheel__spot {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   translate: -50% -50%;
   cursor: pointer;
 }

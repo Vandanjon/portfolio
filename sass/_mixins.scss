@@ -1,7 +1,7 @@
 // Point rond : motif commun au bouton contact et aux roues de choix
 @mixin dot {
-  width: 9px;
-  height: 9px;
+  width: 14px;
+  height: 14px;
   border: 1px solid var(--fg);
   border-radius: 50%;
   background: var(--bg);
