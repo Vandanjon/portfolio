@@ -1,0 +1,33 @@
+// Images de chaque ambiance (thème × saison) : seules celles de l'ambiance affichée
+// sont téléchargées, décor paysage ou portrait selon l'orientation de l'écran
+$themes: light, dark;
+$seasons: printemps, ete, automne, hiver;
+
+@mixin ambience($name) {
+  --tree: url("/img/scene/#{$name}-arbre.avif");
+  --decor: url("/img/scene/#{$name}-paysage.avif");
+
+  @media (orientation: portrait) {
+    --decor: url("/img/scene/#{$name}-portrait.avif");
+  }
+}
+
+// Sans JS, pas de saison choisie : l'été, clair ou sombre selon le système
+.scene {
+  @include ambience(light-ete);
+
+  @media (prefers-color-scheme: dark) {
+    @include ambience(dark-ete);
+  }
+}
+
+// L'ambiance suit <html> (js/prefs.js) ; une scène qui porte ses propres attributs
+// (l'ancienne, pendant le halo) les garde : :where() lui laisse la priorité
+@each $theme in $themes {
+  @each $season in $seasons {
+    :where(:root[data-theme="#{$theme}"][data-season="#{$season}"]) .scene,
+    .scene[data-theme="#{$theme}"][data-season="#{$season}"] {
+      @include ambience("#{$theme}-#{$season}");
+    }
+  }
+}

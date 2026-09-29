@@ -1,0 +1,55 @@
+// Scène de fond : décor et charme de l'ambiance (thème × saison), images générées par
+// tools/tree-gen ; le choix des images est dans _scene-ambiences.scss
+
+// Rayon du halo de transition, animé par js/scene.js
+@property --reveal {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.scene {
+  // Paysage : arbre à gauche de l'axe pour laisser la place au contenu ; portrait : centré
+  --tree-h: 90dvh;
+  --tree-x: 36vw;
+  --foot-y: 90dvh;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+
+  @media (orientation: portrait) {
+    --tree-h: 59dvh;
+    --tree-x: 50vw;
+    --foot-y: 84dvh;
+  }
+}
+
+.scene__decor {
+  position: absolute;
+  inset: 0;
+  // Ancré en bas : le pré reste sous le pied de l'arbre quel que soit le cadrage
+  background: var(--decor) center bottom / cover no-repeat;
+}
+
+// Boîte de l'image de l'arbre, placée pour que son pied tombe en (--tree-x, --foot-y)
+.scene__tree {
+  --heart-at: #{$tree-heart-y}; // hauteur du cœur du houppier, en fraction de la boîte
+  position: absolute;
+  left: calc(var(--tree-x) - var(--tree-h) * #{$tree-foot-x * $tree-width / $tree-height});
+  top: calc(var(--foot-y) - var(--tree-h) * #{$tree-foot-y});
+  height: var(--tree-h);
+  aspect-ratio: #{$tree-width} / #{$tree-height};
+  background: var(--tree) center / contain no-repeat;
+}
+
+// Ancienne scène pendant le halo : un disque s'y ouvre depuis le cœur de l'arbre,
+// bord fondu, et découvre la nouvelle scène dessous
+.scene--leaving {
+  mask-image: radial-gradient(
+    circle at var(--heart-x) var(--heart-y),
+    transparent calc(var(--reveal) - var(--feather)),
+    #000 var(--reveal)
+  );
+}

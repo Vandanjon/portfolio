@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
     <script src="{{ get_url(path='js/prefs.js') }}"></script>
     <script src="{{ get_url(path='js/intro.js') }}"></script>
+    <script src="{{ get_url(path='js/scene.js') }}" defer></script>
   </head>
 
   <body>
@@ -19,6 +20,11 @@
         <kbd>Échap</kbd>
         Sauter l'intro
       </button>
+    </div>
+
+    <div class="scene" aria-hidden="true">
+      <div class="scene__decor"></div>
+      <div class="scene__tree"></div>
     </div>
 
     <header class="site-header">

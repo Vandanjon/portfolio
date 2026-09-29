@@ -1,2 +1,5 @@
 # Zola
 /public
+
+# Générateur d'images de l'arbre
+/tools/tree-gen/target

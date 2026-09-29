@@ -1,6 +1,7 @@
 // Bases (jetons, reset, utilitaires), puis mise en page, puis composants
 @import "mixins";
 @import "tokens";
+@import "scene-data";
 
 *,
 *::before,
@@ -28,5 +29,7 @@ body {
 @import "components/dot";
 @import "components/cta";
 @import "components/wheel";
+@import "components/scene";
+@import "components/scene-ambiences";
 @import "components/intro";
 @import "components/intro-skip";
