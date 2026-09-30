@@ -1,0 +1,30 @@
+// Encadré de contact : repli du bouton « Contactez-moi » sans JS (avec JS, js/contact.js lance
+// la messagerie sans l'ouvrir). Popover natif aux traits du bouton, posé juste au-dessus de
+// lui quand le navigateur sait l'y ancrer, au centre de l'écran sinon
+.contact {
+  padding: 1.25em 2em;
+  border: 1px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  text-align: center;
+}
+
+@supports (position-area: top) {
+  .contact {
+    inset: auto;
+    margin: 0 0 0.75em;
+    position-area: top;
+  }
+}
+
+.contact__title {
+  margin: 0 0 0.75em;
+  font: 600 0.875rem/1 system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.contact__address {
+  margin: 0;
+  font-size: 1.125rem;
+}

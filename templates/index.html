@@ -11,6 +11,7 @@
     <script src="{{ get_url(path='js/scene.js') }}" defer></script>
     <script src="{{ get_url(path='js/fruits.js') }}" defer></script>
     <script src="{{ get_url(path='js/detail.js') }}" defer></script>
+    <script src="{{ get_url(path='js/contact.js') }}" defer></script>
     <script src="{{ get_url(path='js/life/main.js') }}" type="module"></script>
   </head>
 
@@ -116,7 +117,13 @@
     </main>
 
     <footer class="site-footer">
-      <button class="cta" type="button">Contactez-moi</button>
+      <button class="cta" type="button" popovertarget="contact">Contactez-moi</button>
+      {%- set resume = load_data(path="data/resume.toml") %}
+      {%- set mail = resume.profile.email | split(pat="@") %}
+      <section class="contact" id="contact" popover aria-labelledby="contact-titre">
+        <h2 class="contact__title" id="contact-titre">Écrivez-moi</h2>
+        <p class="contact__address" data-user="{{ mail | first }}" data-domain="{{ mail | last }}">{{ mail | first }} (arobase) {{ mail | last }}</p>
+      </section>
       <button class="motion-toggle" type="button" aria-pressed="false" hidden>
         <span class="visually-hidden">Mettre les animations en pause</span>
       </button>
