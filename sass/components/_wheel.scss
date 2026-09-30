@@ -1,14 +1,16 @@
-// Par préférence (= name des radios) : valeur → place (x, y) sur le cercle
+// Par préférence (= name des radios) : valeur → place (x, y) du point sur le cercle,
+// part de la roue où cliquer (moitiés pour le thème, quarts en diagonale pour la saison).
+// Les parts débordent de la roue (-50 %, 150 %) pour ne pas rogner le point posé sur le trait
 $wheels: (
   theme: (
-    light: (0, -1),
-    dark: (0, 1),
+    light: (0, -1, inset(-50% -50% 50%)),
+    dark: (0, 1, inset(50% -50% -50%)),
   ),
   season: (
-    printemps: (0, -1),
-    ete: (1, 0),
-    automne: (0, 1),
-    hiver: (-1, 0),
+    printemps: (0, -1, polygon(50% 50%, -50% -50%, 150% -50%)),
+    ete: (1, 0, polygon(50% 50%, 150% -50%, 150% 150%)),
+    automne: (0, 1, polygon(50% 50%, 150% 150%, -50% 150%)),
+    hiver: (-1, 0, polygon(50% 50%, -50% 150%, -50% -50%)),
   ),
 );
 
@@ -58,8 +60,6 @@ $wheel-colors: (
   border-radius: inherit;
   background: radial-gradient(circle at var(--at), var(--fill), var(--fg) calc(var(--size) * 0.7)) border-box;
   mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0);
-  // Le masque ne retire pas la zone de survol : sans ça, pas d'info-bulle sur le symbole
-  pointer-events: none;
 }
 
 // Sans JS, les roues ne feraient rien : on les masque en gardant leur place
@@ -83,15 +83,22 @@ $wheel-colors: (
   vector-effect: non-scaling-stroke;
 }
 
-// Zone cliquable de 36px centrée sur le point
+// Zone cliquable d'un choix : sa part (clip-path) du disque de la roue, trait compris,
+// par-dessus le symbole. Au-delà du trait, seul le point reste cliquable
 .wheel__spot {
   position: absolute;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  translate: -50% -50%;
+  inset: -1px;
+  border-radius: 50%;
   cursor: pointer;
+}
+
+// Les % partent de la zone, superposée à la roue : le milieu du trait est à
+// (--size / 2 - 0.5px) du centre
+.wheel__spot > .dot {
+  position: absolute;
+  left: calc(50% + var(--x) * (var(--size) / 2 - 0.5px));
+  top: calc(50% + var(--y) * (var(--size) / 2 - 0.5px));
+  translate: -50% -50%;
 }
 
 // Le point choisi prend les couleurs de son symbole
@@ -110,7 +117,7 @@ $wheel-colors: (
 }
 
 @each $pref, $choices in $wheels {
-  @each $value, $spot in $choices {
+  @each $value, $spec in $choices {
     // Seul le symbole du choix actif reste affiché
     :root:not([data-#{$pref}="#{$value}"]) .wheel__icon--#{$value} {
       display: none;
@@ -119,13 +126,13 @@ $wheel-colors: (
     :root[data-#{$pref}="#{$value}"] .wheel--#{$pref} {
       --accent: var(--#{$value});
       --fill: var(--#{$value}-fill);
-      --at: #{(1 + nth($spot, 1)) * 50%} #{(1 + nth($spot, 2)) * 50%};
+      --at: #{(1 + nth($spec, 1)) * 50%} #{(1 + nth($spec, 2)) * 50%};
     }
 
-    // Les % partent de la padding box : le milieu du trait est à (--size / 2 - 0.5px) du centre
     .wheel__spot:has(> [name="#{$pref}"][value="#{$value}"]) {
-      left: calc(50% + #{nth($spot, 1)} * (var(--size) / 2 - 0.5px));
-      top: calc(50% + #{nth($spot, 2)} * (var(--size) / 2 - 0.5px));
+      --x: #{nth($spec, 1)};
+      --y: #{nth($spec, 2)};
+      clip-path: #{nth($spec, 3)};
     }
   }
 }
