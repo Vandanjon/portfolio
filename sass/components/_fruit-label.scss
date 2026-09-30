@@ -15,6 +15,12 @@
   background: var(--pill);
   font-size: 0.8rem;
   line-height: 1.35;
+  transition: opacity 0.6s ease;
+}
+
+// Encadré ouvert (_detail.scss) : il porte l'information, les étiquettes s'effacent
+:root:has(.detail:popover-open) .fruit__label {
+  opacity: 0;
 }
 
 // Côté fruit de la pastille : à gauche si l'étiquette est à droite, et inversement

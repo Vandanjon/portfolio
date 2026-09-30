@@ -1,0 +1,36 @@
+// Effets autour de l'encadré (_detail.scss) : le reste de la page s'efface, le contenu monte
+// Encadré ouvert : l'en-tête et le pied de page s'effacent devant lui
+.site-header,
+.site-footer {
+  transition: opacity 0.6s ease;
+}
+
+:root:has(.detail:popover-open) :is(.site-header, .site-footer) {
+  opacity: 0.3;
+}
+
+// Le contenu monte ligne après ligne
+@media (prefers-reduced-motion: no-preference) {
+  .detail:popover-open > * {
+    animation: detail-rise 0.7s $detail-ease backwards;
+  }
+
+  @for $i from 2 through 7 {
+    .detail:popover-open > :nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 70ms};
+    }
+  }
+}
+
+@keyframes detail-rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail {
+    transition: none;
+  }
+}

@@ -6,7 +6,7 @@ $seasons: printemps, ete, automne, hiver;
 $fruit-colors: (
   "light-printemps": (#ffe0e3, #f06a7a, #a8323f),
   "light-ete": (#ffe2c4, #ef5b2a, #9c2a12),
-  "light-automne": (#ffd0d6, #c8233c, #6e0f1d),
+  "light-automne": (#f0dcff, #8a3fc4, #451570),
   "light-hiver": (#eef7ff, #5aa9f0, #1f5f9e),
   "dark-printemps": (#fff4c9, #ffc94a, #b0701a),
   "dark-ete": (#e6fdff, #33d6e0, #0f6f86),
@@ -14,13 +14,21 @@ $fruit-colors: (
   "dark-hiver": (#fff1cc, #ffb63d, #a8620c),
 );
 
-@mixin ambience($name) {
-  $fruit: map-get($fruit-colors, "#{$name}");
+// Reflet, chair et ombre d'une ambiance, sous le préfixe donné
+@mixin fruit-colors($prefix, $name) {
+  $colors: map-get($fruit-colors, $name);
+  --#{$prefix}-light: #{nth($colors, 1)};
+  --#{$prefix}: #{nth($colors, 2)};
+  --#{$prefix}-dark: #{nth($colors, 3)};
+}
+
+// --fruit-alt : le fruit choisi porte les couleurs de la même saison dans l'autre thème
+@mixin ambience($theme, $season) {
+  $name: "#{$theme}-#{$season}";
   --tree: url("/img/scene/#{$name}-arbre.avif");
   --decor: url("/img/scene/#{$name}-paysage.avif");
-  --fruit-light: #{nth($fruit, 1)};
-  --fruit: #{nth($fruit, 2)};
-  --fruit-dark: #{nth($fruit, 3)};
+  @include fruit-colors(fruit, $name);
+  @include fruit-colors(fruit-alt, "#{if($theme == light, dark, light)}-#{$season}");
 
   @media (orientation: portrait) {
     --decor: url("/img/scene/#{$name}-portrait.avif");
@@ -30,10 +38,10 @@ $fruit-colors: (
 // Sans JS, pas de saison choisie : l'été, clair ou sombre selon le système
 .scene,
 .orchard {
-  @include ambience(light-ete);
+  @include ambience(light, ete);
 
   @media (prefers-color-scheme: dark) {
-    @include ambience(dark-ete);
+    @include ambience(dark, ete);
   }
 }
 
@@ -43,7 +51,7 @@ $fruit-colors: (
   @each $season in $seasons {
     :where(:root[data-theme="#{$theme}"][data-season="#{$season}"]) :is(.scene, .orchard),
     .scene[data-theme="#{$theme}"][data-season="#{$season}"] {
-      @include ambience("#{$theme}-#{$season}");
+      @include ambience($theme, $season);
     }
   }
 }

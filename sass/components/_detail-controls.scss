@@ -1,0 +1,67 @@
+// Boutons de l'encadré : fermer, étape précédente, étape suivante
+// Fermer : cercle au trait, dans la famille des roues, lisible même sur le bord fondu
+.detail__close {
+  position: absolute;
+  top: 3dvh;
+  right: var(--gutter);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+}
+
+// Croix : deux traits croisés
+.detail__close::before,
+.detail__close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 16px;
+  height: 1.5px;
+  margin: auto;
+  background: currentColor;
+  rotate: 45deg;
+}
+
+.detail__close::after {
+  rotate: -45deg;
+}
+
+// Étapes voisines : précédente à gauche, suivante à droite
+.detail__steps {
+  display: flex;
+  justify-self: stretch;
+  margin-top: 0.6rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid color-mix(in srgb, var(--fg) 20%, transparent);
+}
+
+.detail__step {
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.detail__step--prev::before {
+  content: "‹ ";
+}
+
+.detail__step--next {
+  margin-left: auto;
+}
+
+.detail__step--next::after {
+  content: " ›";
+}
+
+.detail :is(.detail__close, .detail__step):focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}

@@ -13,25 +13,21 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-// Tous centrés sur la zone cliquable, taille rapportée au fruit
+// Tous centrés sur la zone cliquable, même plus larges qu'elle ; diamètre : --span
 .fruit::before,
 .fruit::after,
 .fruit__ring,
 .fruit__body {
   position: absolute;
-  inset: 0;
-  width: var(--fruit-size);
-  height: var(--fruit-size);
-  margin: auto;
+  inset: calc(50% - var(--span, var(--fruit-size)) / 2);
   border-radius: 50%;
   transition: opacity 0.4s ease, scale 0.5s cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
 // Lueur dessous
 .fruit::before {
+  --span: calc(var(--fruit-size) * 6);
   content: "";
-  width: calc(var(--fruit-size) * 6);
-  height: calc(var(--fruit-size) * 6);
   background: radial-gradient(
     closest-side,
     color-mix(in srgb, var(--fruit-light) 90%, transparent),
@@ -50,8 +46,7 @@
 }
 
 .fruit__ring {
-  width: calc(var(--fruit-size) * 1.8);
-  height: calc(var(--fruit-size) * 1.8);
+  --span: calc(var(--fruit-size) * 1.8);
   border: 1.2px solid var(--fruit-light);
   opacity: 0.6;
 }

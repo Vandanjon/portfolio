@@ -8,25 +8,30 @@
   initial-value: 0px;
 }
 
-// Boîte de l'image de l'arbre, placée pour que son pied tombe en (--tree-x, --foot-y) ;
-// les fruits (_fruit.scss) en posent une identique pour rester collés à l'image
-@mixin tree-box {
+// Hauteur de l'image de l'arbre et position de son pied à l'écran ; sur :root, car la
+// caméra (_camera.scss) zoome toute la scène autour de ce pied
+:root {
   // Paysage : arbre à gauche de l'axe pour laisser la place au contenu ; portrait : centré
   --tree-h: 90dvh;
   --tree-x: 36vw;
   --foot-y: 90dvh;
-  left: calc(var(--tree-x) - var(--tree-h) * #{$tree-foot-x * $tree-width / $tree-height});
-  top: calc(var(--foot-y) - var(--tree-h) * #{$tree-foot-y});
-  height: var(--tree-h);
-  aspect-ratio: #{$tree-width} / #{$tree-height};
-  // L'arbre ploie depuis son pied (rafales de js/life/gusts.js)
-  transform-origin: #{$tree-foot-x * 100%} #{$tree-foot-y * 100%};
 
   @media (orientation: portrait) {
     --tree-h: 59dvh;
     --tree-x: 50vw;
     --foot-y: 84dvh;
   }
+}
+
+// Boîte de l'image de l'arbre, placée pour que son pied tombe en (--tree-x, --foot-y) ;
+// les fruits (_orchard.scss) en posent une identique pour rester collés à l'image
+@mixin tree-box {
+  left: calc(var(--tree-x) - var(--tree-h) * #{$tree-foot-x * $tree-width / $tree-height});
+  top: calc(var(--foot-y) - var(--tree-h) * #{$tree-foot-y});
+  height: var(--tree-h);
+  aspect-ratio: #{$tree-width} / #{$tree-height};
+  // L'arbre ploie depuis son pied (rafales de js/life/gusts.js)
+  transform-origin: #{$tree-foot-x * 100%} #{$tree-foot-y * 100%};
 }
 
 .scene {

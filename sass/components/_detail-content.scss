@@ -1,0 +1,48 @@
+// Texte de l'encadré : année et thèmes, intitulé, ornement, accroche, public
+.detail :is(.detail__eyebrow, dt, .detail__step) {
+  font: 600 0.75rem/1.2 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.detail :is(p, h2, dl, dd) {
+  margin: 0;
+}
+
+.detail__title {
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+// Deux filets qui s'effacent vers l'extérieur, un losange entre eux
+.detail__ornament {
+  position: relative;
+  width: 140px;
+  height: 7px;
+  background: linear-gradient(90deg, transparent, currentColor 42%, transparent 42% 58%, currentColor 58%, transparent) center / 100% 1px no-repeat;
+}
+
+.detail__ornament::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 7px;
+  margin: auto;
+  border: 1px solid currentColor;
+  rotate: 45deg;
+}
+
+.detail__baseline {
+  max-width: 30ch;
+  font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+  font-style: italic;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.detail__meta {
+  display: grid;
+  gap: 6px;
+}

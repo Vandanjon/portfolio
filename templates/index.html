@@ -10,6 +10,7 @@
     <script src="{{ get_url(path='js/intro.js') }}"></script>
     <script src="{{ get_url(path='js/scene.js') }}" defer></script>
     <script src="{{ get_url(path='js/fruits.js') }}" defer></script>
+    <script src="{{ get_url(path='js/detail.js') }}" defer></script>
     <script src="{{ get_url(path='js/life/main.js') }}" type="module"></script>
   </head>
 
@@ -55,7 +56,7 @@
       <ol class="orchard" aria-label="Parcours">
         {%- for step in projects.career %}
         <li>
-          <button class="fruit" type="button">
+          <button class="fruit" type="button" popovertarget="etape-{{ loop.index }}">
             <span class="fruit__ring"></span>
             <span class="fruit__body"></span>
             <span class="fruit__label">
@@ -66,6 +67,32 @@
         </li>
         {%- endfor %}
       </ol>
+      {%- for step in projects.career %}
+      {%- set id = "etape-" ~ loop.index %}
+      <section class="detail" id="{{ id }}" popover aria-labelledby="{{ id }}-titre">
+        <button class="detail__close" type="button" popovertarget="{{ id }}" popovertargetaction="hide">
+          <span class="visually-hidden">Fermer</span>
+        </button>
+        <p class="detail__eyebrow">{{ step.year }} · {{ step.themes | join(sep=" · ") }}</p>
+        <h2 class="detail__title" id="{{ id }}-titre">{{ step.work }}</h2>
+        <div class="detail__ornament"></div>
+        <p class="detail__baseline">{{ step.baseline }}</p>
+        <dl class="detail__meta">
+          <dt>Public</dt>
+          <dd>{{ step.public }}</dd>
+        </dl>
+        <nav class="detail__steps" aria-label="Autres étapes">
+          {%- if not loop.first %}
+          {%- set before = projects.career | nth(n=loop.index0 - 1) %}
+          <button class="detail__step detail__step--prev" type="button" popovertarget="etape-{{ loop.index - 1 }}" aria-label="Étape précédente : {{ before.year }}, {{ before.work }}">{{ before.year }}</button>
+          {%- endif %}
+          {%- if not loop.last %}
+          {%- set after = projects.career | nth(n=loop.index) %}
+          <button class="detail__step detail__step--next" type="button" popovertarget="etape-{{ loop.index + 1 }}" aria-label="Étape suivante : {{ after.year }}, {{ after.work }}">{{ after.year }}</button>
+          {%- endif %}
+        </nav>
+      </section>
+      {%- endfor %}
     </main>
 
     <footer class="site-footer">

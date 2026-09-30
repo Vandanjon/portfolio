@@ -1,0 +1,80 @@
+// Encadré d'une étape du parcours : popover natif ouvert par son fruit, même sans JS ; à
+// droite en paysage (30 % de l'écran, plus son bord fondu), en feuille montante en portrait.
+// Contenu : _detail-content.scss ; zoom sur le fruit : js/detail.js
+$detail-ease: cubic-bezier(0.16, 0.84, 0.24, 1);
+
+// Bord fondu en courbe douce (smoothstep) plutôt qu'en rampe : ni arête au départ, ni à
+// l'arrivée ; pleinement opaque au bout de --edge
+@function soft-fade($steps: 10) {
+  $stops: ();
+  @for $i from 0 through $steps {
+    $t: $i / $steps;
+    $stops: append($stops, color-mix(in srgb, var(--bg) #{$t * $t * (3 - 2 * $t) * 100%}, transparent) calc(var(--edge) * #{$t}), comma);
+  }
+  @return $stops;
+}
+
+.detail {
+  --from: 3vw 0; // d'où il arrive
+  --fade: 90deg; // sens du fondu : de la scène vers le texte
+  --edge: 12vw; // largeur du bord fondu, que le texte n'entame pas
+  --gutter: 2.5vw;
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: calc(max(30vw, 20rem) + var(--edge)); // cadre opaque de 30 %, plus son fondu
+  height: 100%;
+  margin: 0;
+  padding: 12dvh var(--gutter) 5dvh calc(var(--edge) + var(--gutter));
+  border: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: linear-gradient(var(--fade), soft-fade());
+  color: var(--fg);
+  text-align: start; // .site-main centre son contenu
+  opacity: 0;
+  translate: var(--from);
+  // overlay et display : il reste affiché le temps de repartir
+  transition: opacity 0.7s ease, translate 1s $detail-ease, overlay 1s allow-discrete, display 1s allow-discrete;
+}
+
+.detail:popover-open {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.1rem;
+  opacity: 1;
+  translate: 0 0;
+}
+
+@starting-style {
+  .detail:popover-open {
+    opacity: 0;
+    translate: var(--from);
+  }
+}
+
+// Voile léger sur la scène ; il laisse passer les clics (fermeture au clic à côté)
+.detail::backdrop {
+  background: rgb(0 0 0 / 0.1);
+}
+
+@media (orientation: portrait) {
+  .detail {
+    --from: 0 5dvh;
+    --fade: 180deg;
+    --edge: 12dvh;
+    --gutter: 5vw;
+    inset: auto 0 0;
+    width: 100%;
+    height: auto;
+    max-height: 66dvh;
+    padding: calc(var(--edge) + 1dvh) var(--gutter) 3dvh;
+  }
+}
+
+// Navigateur sans popover : les encadrés ne s'étalent pas sur la page
+@supports not selector(:popover-open) {
+  .detail {
+    display: none;
+  }
+}

@@ -1,0 +1,35 @@
+// Caméra : le décor, ses habitants et les fruits zooment ensemble autour du pied de l'arbre.
+// js/detail.js pose --cam-x, --cam-y et --cam-zoom sur <html> tant qu'un encadré est ouvert
+$camera-ease: cubic-bezier(0.65, 0, 0.35, 1);
+$camera-transition: translate 1.6s $camera-ease, scale 1.6s $camera-ease;
+
+.scene,
+.life,
+.orchard {
+  translate: var(--cam-x, 0) var(--cam-y, 0);
+  scale: var(--cam-zoom, 1);
+}
+
+// .life ajoute ce mouvement à sa propre transition (_life.scss)
+.scene,
+.orchard {
+  transition: $camera-transition;
+}
+
+// Plein écran : même origine que la boîte des fruits, qui ploie déjà depuis le pied
+.scene,
+.life {
+  transform-origin: var(--tree-x) var(--foot-y);
+}
+
+// Retour à plat immédiat (js/detail.js)
+.camera-cut :is(.scene, .life, .orchard) {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .orchard {
+    transition: none;
+  }
+}
