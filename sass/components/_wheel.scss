@@ -1,18 +1,38 @@
-// Par préférence (= name des radios) : valeur → lettre au centre, place (x, y) sur le cercle
+// Par préférence (= name des radios) : valeur → place (x, y) sur le cercle
 $wheels: (
   theme: (
-    light: ("c", 0, -1),
-    dark: ("s", 0, 1),
+    light: (0, -1),
+    dark: (0, 1),
   ),
   season: (
-    printemps: ("p", 0, -1),
-    ete: ("e", 1, 0),
-    automne: ("a", 0, 1),
-    hiver: ("h", -1, 0),
+    printemps: (0, -1),
+    ete: (1, 0),
+    automne: (0, 1),
+    hiver: (-1, 0),
   ),
 );
 
-// Cercle portant la lettre du choix actif ; les choix sont posés sur son trait,
+// Couleurs de chaque symbole, par thème : trait, aplat. Le trait porte la lisibilité,
+// contraste ≥ 3:1 (WCAG 1.4.11) avec le ciel derrière la roue : profond de jour, clair
+// de nuit. L'aplat porte la teinte : vif de jour (un jaune seul s'y perdrait), soutenu de nuit
+$wheel-colors: (
+  light: (
+    light: (#7a5000, #ffc928),
+    printemps: (#28781c, #9bdc5c),
+    ete: (#a31452, #ff8fbd),
+    automne: (#952a09, #ff9a3d),
+    hiver: (#1b68c0, #9fd0ff),
+  ),
+  dark: (
+    dark: (#ffe08a, #d9a520),
+    printemps: (#a9e38c, #4f9a3a),
+    ete: (#ff9fc6, #d6558f),
+    automne: (#ff9b5e, #d9662b),
+    hiver: (#bfe3ff, #4a90d9),
+  ),
+);
+
+// Cercle portant le symbole du choix actif ; les choix sont posés sur son trait,
 // comme les points du bouton contact sur ses bords
 .wheel {
   --size: 66px;
@@ -23,8 +43,23 @@ $wheels: (
   height: var(--size);
   margin: 0;
   padding: 0;
-  border: 1px solid var(--fg);
+  // Place du trait, dessiné par ::before
+  border: 1px solid transparent;
   border-radius: 50%;
+}
+
+// Trait du cercle : teinte du choix actif à son point (--at), fondue vers --fg,
+// atteint à la distance des points voisins. Le masque ne garde que la bordure
+.wheel::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: inherit;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--at), var(--fill), var(--fg) calc(var(--size) * 0.7)) border-box;
+  mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0);
+  // Le masque ne retire pas la zone de survol : sans ça, pas d'info-bulle sur le symbole
+  pointer-events: none;
 }
 
 // Sans JS, les roues ne feraient rien : on les masque en gardant leur place
@@ -32,10 +67,20 @@ $wheels: (
   visibility: hidden;
 }
 
-.wheel__letter {
-  // Texte : suit la taille de texte du navigateur (le cercle, lui, est un dessin en px)
-  font-size: 1.6875rem;
-  line-height: 1;
+// Symboles de la famille des points du cercle : aplat cerné d'un trait, bouts ronds
+.wheel__icon {
+  width: 54%;
+  height: 54%;
+  fill: var(--fill);
+  stroke: var(--accent);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// Le trait garde son épaisseur, quelle que soit la taille de la roue
+.wheel__icon * {
+  vector-effect: non-scaling-stroke;
 }
 
 // Zone cliquable de 36px centrée sur le point
@@ -49,16 +94,38 @@ $wheels: (
   cursor: pointer;
 }
 
+// Le point choisi prend les couleurs de son symbole
+.wheel .dot:checked {
+  border-color: var(--accent);
+  background: var(--fill);
+}
+
+@each $theme, $colors in $wheel-colors {
+  :root[data-theme="#{$theme}"] .wheel {
+    @each $value, $tones in $colors {
+      --#{$value}: #{nth($tones, 1)};
+      --#{$value}-fill: #{nth($tones, 2)};
+    }
+  }
+}
+
 @each $pref, $choices in $wheels {
-  @each $value, $spec in $choices {
-    :root[data-#{$pref}="#{$value}"] .wheel--#{$pref} .wheel__letter::before {
-      content: nth($spec, 1);
+  @each $value, $spot in $choices {
+    // Seul le symbole du choix actif reste affiché
+    :root:not([data-#{$pref}="#{$value}"]) .wheel__icon--#{$value} {
+      display: none;
+    }
+
+    :root[data-#{$pref}="#{$value}"] .wheel--#{$pref} {
+      --accent: var(--#{$value});
+      --fill: var(--#{$value}-fill);
+      --at: #{(1 + nth($spot, 1)) * 50%} #{(1 + nth($spot, 2)) * 50%};
     }
 
     // Les % partent de la padding box : le milieu du trait est à (--size / 2 - 0.5px) du centre
     .wheel__spot:has(> [name="#{$pref}"][value="#{$value}"]) {
-      left: calc(50% + #{nth($spec, 2)} * (var(--size) / 2 - 0.5px));
-      top: calc(50% + #{nth($spec, 3)} * (var(--size) / 2 - 0.5px));
+      left: calc(50% + #{nth($spot, 1)} * (var(--size) / 2 - 0.5px));
+      top: calc(50% + #{nth($spot, 2)} * (var(--size) / 2 - 0.5px));
     }
   }
 }
